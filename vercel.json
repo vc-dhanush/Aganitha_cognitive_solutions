@@ -1,8 +1,26 @@
 {
-  "buildCommand": "cd frontend && npm install && npm run build",
+  "$schema": "https://openapi.vercel.com/vercel.json",
+  "version": 2,
+  "name": "microscopyai",
+  "installCommand": "cd frontend && npm ci",
+  "buildCommand": "cd frontend && npm run build",
   "outputDirectory": "frontend/dist",
   "framework": "vite",
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/((?!assets/).*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/demo/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
+    },
+    {
+      "source": "/samples/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    }
   ]
 }

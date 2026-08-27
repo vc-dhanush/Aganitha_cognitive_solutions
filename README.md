@@ -150,15 +150,21 @@ When `VITE_DEMO_MODE=true`, the UI loads bundled **DEMO DATA** if the backend is
 
 ## Deployment
 
-### Vercel (frontend)
+See **[DEPLOYMENT.md](DEPLOYMENT.md)** for step-by-step Vercel instructions.
 
-- Root `vercel.json` builds `frontend/` and serves SPA
-- Set `VITE_API_URL` to your deployed Python API
-- Set `VITE_DEMO_MODE=true` for standalone UI demos
+### Vercel (frontend + demo mode)
 
-### Python API
+1. Import the GitHub repo on Vercel (root directory = repository root).
+2. Set environment variables:
+   - `VITE_DEMO_MODE=true`
+   - `VITE_API_URL=` (empty for demo-only, or your API URL for live mode)
+3. Deploy — `vercel.json` builds `frontend/` automatically.
 
-Deploy FastAPI on any Python-compatible host (Railway, Fly.io, EC2, etc.). Heavy Cellpose/PyTorch inference is **not** assumed to run in Vercel serverless functions.
+The Vercel deployment runs the full UI with **DEMO DATA** (precomputed analysis). Cellpose inference does not run on Vercel serverless.
+
+### Python API (live inference)
+
+Deploy `backend/` on Railway, Fly.io, Render, or a VM. Then set `VITE_API_URL` on Vercel and redeploy.
 
 ## Development
 
