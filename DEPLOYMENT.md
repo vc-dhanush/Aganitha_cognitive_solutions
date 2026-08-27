@@ -21,8 +21,11 @@ Ensure `main` contains the MicroscopyAI code (branch `cursor/microscopyai-pipeli
 
 1. Go to [vercel.com/new](https://vercel.com/new)
 2. Import `vc-dhanush/Aganitha_cognitive_solutions`
-3. **Root Directory:** leave as repository root (`.`)
-4. Vercel will read `vercel.json` at the repo root
+3. **Root Directory:** click **Edit** → set to **`frontend`** → Confirm  
+   (Do **not** leave Root Directory empty if your build log shows `cd frontend: No such file or directory`.)
+4. Framework: **Vite** (auto-detected from `frontend/vercel.json`)
+
+**Important:** With Root Directory = `frontend`, install/build must **not** use `cd frontend`. The repo’s `frontend/vercel.json` handles that.
 
 ### 3. Environment variables (Project → Settings → Environment Variables)
 
@@ -43,14 +46,14 @@ Do **not** include a trailing slash.
 
 ### 4. Deploy
 
-Click **Deploy**. Build should run:
+Click **Deploy**. Build should run (from `frontend/`):
 
 ```text
-cd frontend && npm ci
-cd frontend && npm run build
+npm install
+npm run build
 ```
 
-Output: `frontend/dist`
+Output: `dist`
 
 ### 5. Verify
 
@@ -126,7 +129,7 @@ Redeploy the frontend. Upload + **RUN ANALYSIS** will use live mode when the API
 | `npm run dev` ENOENT | Run commands from `frontend/`, not your user home folder |
 | Build fails on Vercel | Check build logs; run `cd frontend && npm ci && npm run build` locally |
 | Blank page after deploy | Confirm `outputDirectory` is `frontend/dist` |
-| Demo doesn't load | Set `VITE_DEMO_MODE=true` and redeploy (Vite embeds env at build time) |
+| `cd frontend: No such file or directory` | Set **Root Directory** to `frontend` in Vercel → Settings → General, clear custom Install Command override, redeploy |
 | "Live" but no cells | Backend unreachable; demo fallback runs if `VITE_DEMO_MODE=true` |
 
 ---
